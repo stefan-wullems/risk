@@ -1,13 +1,3 @@
-# Katas skeleton for Clojure
+# risk-dop
 
-## Install Clojure
-
-Follow the instructions at https://clojure.org/guides/getting_started
-
-## Run tests
-
-lein test
-
-## Details
-
-This version uses lein to handle the project. For tests uses the default clojure.test
+Implementation of [Risk (the board game)](https://en.wikipedia.org/wiki/Risk_(game)) following the DOP programming paradigm as it is presented in [Data-oriented programming](https://www.manning.com/books/data-oriented-programming).
