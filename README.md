@@ -38,11 +38,11 @@ Implementation of [Risk (the board game)](<https://en.wikipedia.org/wiki/Risk_(g
 
 ### Data model
 
-TODO
+![image](https://user-images.githubusercontent.com/28148115/188442501-59145c7a-abdb-4b87-ba1d-c371838f1d2f.png)
 
 ### Modules
 
-TODO
+![image](https://user-images.githubusercontent.com/28148115/188442105-04095ded-acd1-4b7d-9896-932f75c30346.png)
 
 ###
 
