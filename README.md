@@ -7,32 +7,57 @@ Implementation of [Risk (the board game)](<https://en.wikipedia.org/wiki/Risk_(g
 ### Requirements
 
 - The game can be played with a minimum of 3 players and a maximum of 6.
-- Each player chooses an army and depending on the amount of players.
-- Each army has a maximum of 180 infantry.
-- The turn order is decided by each rolling a die. The turn order is from highest to lowest roll. Resolve conflicts by repeating.
-- The territories are distributed following these steps:
-  - The following infantry are distributed to each player.
-    - 3 players (35 infantry)
-    - 4 players (30 infantry)
-    - 5 players (25 infantry)
-    - 6 players (20 infantry)
-  - According to the turn order, players place one infantry on unoccupied territories untill all territories are occupied.
-  - According to the turn order, players continue placing infantries on the territories they've occupied until players run out of infantry.
+- Each player randomly gets assigned an army.
+- The turn order is randomly decided.
+- The army units are distributed over territories following these steps:
+  - The following Army units are distributed to each player.
+    - 3 players (35 Army units)
+    - 4 players (30 Army units)
+    - 5 players (25 Army units)
+    - 6 players (20 Army units)
+  - According to the turn order, players place one Army units on unoccupied territories untill all territories are occupied.
+  - According to the turn order, players continue placing infantries on the territories they've occupied until players run out of Army units.
 - Turns are taken by players according to the turn order.
-- When a its the turn of a player, they can either choose to attack or they can pass
-  - A player can attack any enemy territory that's adjacent to a territory they own that has at least 2 infantry. A player can keep repeating this action as long as these requirements are met.
-    - When a player attacks a territory, both the player and the owner of the attacked territory throw a dice. The player who throws the lowest number loses an infantry. If it's a tie, only the attacker loses an infantry.
-    - When the defender loses its last infantry on a territory, the attacker has captured the territory an must move at least one infantry onto the territory. At least one infantry must stay behind on the attacking territory.
+- When a its the turn of a player, go through the following steps:
+  - Step 1 (Strengthening army):
+    - The player receives an amount of armies that they can distribute among their territories any way they wish.
+    - The amount they receive is calculated according to this formula:
+      - `(amount of occupied territories % 3) with a minimum of 3`
+    - The total amount of armies the player has on the board cannot exceed 180.
+  - Step 2 (Attack):
+    - The player can attack enemy territory if they own an adjacent territory that has more than one trooper. They can then choose to attack with 1-3 troopers, as long as at least 1 trooper stays behind.
+    - The defender can choose to defend with 1, or if they have a second, 2 troopers.
+    - Each player can roll one die for each trooper that engages in combat.
+    - The casualties are determined according to the following algorithm:
+    - Take the highest roll of each player. If the attacker rolled higher, the defender has one casualty, otherwise the attacker has a casualty. Remove the dice and repeat with the remaining dice until one player runs out.
+    - If the defender is left with no troops left on their territory, the territory is captured by the attacker and the attacking troops that survived must move to the newly captured territory.
+    - The attacker can keep attacking as many territories as they want.
+  - Step 3 (Fortify positions):
+    - A player can move any number of armies from one territory to any adjacent territory that they occupy as long as at least 1 army stays behind on any given territory.
 - A player wins when they have taken all territories on the map.
+
+### Data model
+
+TODO
+
+### Modules
+
+TODO
+
+###
 
 ## Future iterations
 
-- [ ] 1. Add army strengthening step to turns
-- [ ] 2. Add fortification step to turns
-- [ ] 3. Attack with multiple die
+- [x] 1. Add army strengthening step to turns
+- [x] 2. Add fortification step to turns
+- [x] 3. Attack with multiple die
 - [ ] 4. Gain more armies when having captured entire continents (depends on 1)
 - [ ] 5. Add risk cards (at the end of a turn where a territory is captured)
 - [ ] 6. Add more kinds of army units
 - [ ] 7. Add mission cards
 - [ ] 8. Add second player with special game rules
 - [ ] 9. Add online play
+
+## Notes
+
+- If the highest guard is successful, no other guard should ever be unsuccessful.
