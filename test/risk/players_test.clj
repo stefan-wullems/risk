@@ -4,5 +4,5 @@
 
 (deftest current-player
   (testing "Returns current player"
-    (let [state {:turn {:player :green}}]
-      (is (= :green (players/current-player state))))))
+    (let [player-state {:turn {:player :green}}]
+      (is (= :green (players/current-player player-state))))))
