@@ -1,4 +1,4 @@
-(ns risk.map (:require [clojure.set :refer :all]))
+(ns risk.board (:require [clojure.set :as set]))
 
 (def continents {:north-america #{:alaska :alberta :central-america :eastern-us :greenland :north-west-territory :ontario :quebec :western-us}
                  :europe #{:great-britain :iceland :northern-europe :scandinavia :southern-europe :ukraine :western-europe}
@@ -6,6 +6,8 @@
                  :south-america #{:argentina :brazil :peru :venezuela}
                  :africa #{:congo :east-africa :egypt :madagascar :north-africa :south-africa}
                  :australia #{:eastern-australia :indonesia :new-guinea :western-australia}})
+
+(def territories (apply set/union (vals continents)))
 
 (def neighbors #{#{:quebec :ontario} #{:afghanistan :india} #{:southern-europe :western-europe} #{:north-africa :east-africa}
                  #{:ukraine :afghanistan} #{:ural :ukraine} #{:mongolia :kamchatka} #{:irkutsk :mongolia}
@@ -30,4 +32,9 @@
                  #{:middle-east :ukraine} #{:middle-east :india} #{:north-west-territory :alaska}})
 
 (defn neighbors-of [territory]
-  (disj (reduce union #{} (filter territory neighbors)) territory))
+  (disj (apply set/union (filter territory neighbors)) territory))
+
+(defn occupied-territories [board-state player-color]
+  (get-in board-state [:territories-by-player-color player-color]))
+
+(defn armies-to-receive [board-state color] 3)
