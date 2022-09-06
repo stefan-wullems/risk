@@ -37,4 +37,6 @@
 (defn occupied-territories [board-state player-color]
   (get-in board-state [:territories-by-player-color player-color]))
 
+(def army-colors #{:red, :blue, :green, :yellow, :purple, :pink})
+
 (defn armies-to-receive [board-state color] 3)
