@@ -1,11 +1,23 @@
-(ns risk.board (:require [clojure.set :as set]))
+(ns risk.rules.board (:require [clojure.set :as set]))
 
-(def continents {:north-america #{:alaska :alberta :central-america :eastern-us :greenland :north-west-territory :ontario :quebec :western-us}
-                 :europe #{:great-britain :iceland :northern-europe :scandinavia :southern-europe :ukraine :western-europe}
-                 :asia #{:afghanistan :china :india :irkutsk :japan :kamchatka :middle-east :mongolia :siam :siberia :ural :yakutsk}
-                 :south-america #{:argentina :brazil :peru :venezuela}
-                 :africa #{:congo :east-africa :egypt :madagascar :north-africa :south-africa}
-                 :australia #{:eastern-australia :indonesia :new-guinea :western-australia}})
+(def board {:north-america #{:alaska :alberta :central-america :eastern-us :greenland :north-west-territory :ontario :quebec :western-us}
+            :europe #{:great-britain :iceland :northern-europe :scandinavia :southern-europe :ukraine :western-europe}
+            :asia #{:afghanistan :china :india :irkutsk :japan :kamchatka :middle-east :mongolia :siam :siberia :ural :yakutsk}
+            :south-america #{:argentina :brazil :peru :venezuela}
+            :africa #{:congo :east-africa :egypt :madagascar :north-africa :south-africa}
+            :australia #{:eastern-australia :indonesia :new-guinea :western-australia}})
+
+(defn continent-fully-occupied? [territories continent]
+  (set/subset? (get board continent) territories))
+
+(def territories (reduce set/union (vals board)))
+
+(defn valid-territory? [territory]
+  (contains? territories territory))
+
+(defn fully-occupied-continents [territories]
+  {:pre [(every? valid-territory? territories)]}
+  (set (filter #(continent-fully-occupied? territories %) (keys board))))
 
 (def neighbors #{#{:quebec :ontario} #{:afghanistan :india} #{:southern-europe :western-europe} #{:north-africa :east-africa}
                  #{:ukraine :afghanistan} #{:ural :ukraine} #{:mongolia :kamchatka} #{:irkutsk :mongolia}
@@ -30,16 +42,5 @@
                  #{:middle-east :ukraine} #{:middle-east :india} #{:north-west-territory :alaska}})
 
 (defn neighbors-of [territory]
-  (disj (apply set/union (filter territory neighbors)) territory))
-
-;; ;; I was implementing this function and then I wanted to check whether the 
-;; ;; second armies-to-receive property tests ran.
-;; (defn occupied-territories [board-state player-color]
-;;   (let [board (:board board-state)]
-;;     (filter (fn []))
-;;   (get :board  board-state [:territories-by-player-color player-color]))
-(def occupied-territories nil)
-
-(def army-colors #{:red, :blue, :green, :yellow, :purple, :pink})
-
-(defn armies-to-receive [board-state color] 3)
+  {:pre [(valid-territory? territory)]}
+  (disj (reduce set/union (filter territory neighbors)) territory))
